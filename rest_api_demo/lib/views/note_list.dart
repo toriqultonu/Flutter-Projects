@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rest_api_demo/models/note_for_listing.dart';
+import 'package:rest_api_demo/services/notes_service.dart';
 import 'package:rest_api_demo/views/note_delete.dart';
 import 'package:rest_api_demo/views/note_modify.dart';
 
 class NoteList extends StatelessWidget {
+
+  NoteService get service => GetIt.instance<NoteService>();
 
   final notes = [
     new NoteForListing("1", "Note 1", DateTime.now(), DateTime.now()),
@@ -32,7 +36,6 @@ class NoteList extends StatelessWidget {
             key: ValueKey(notes[index].noteID),
             direction: DismissDirection.startToEnd,
             onDismissed: (direction){
-
             },
             confirmDismiss: (direction) async {
               final result = await showDialog(

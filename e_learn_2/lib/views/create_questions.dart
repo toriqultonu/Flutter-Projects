@@ -18,7 +18,7 @@ class _CreateQuestionsState extends State<CreateQuestions> {
   String questionImageURL, questionTitle, questionDescription, questionID;
  // DatabaseService databaseService = new DatabaseService();
   bool _isloading = false;
-  final _firestore = FirebaseFirestore.instance;
+  DatabaseService databaseService = new DatabaseService();
 
 
   createQuestionOnline() async {
@@ -26,23 +26,14 @@ class _CreateQuestionsState extends State<CreateQuestions> {
       setState(() {
         //_isloading = true;
       });
-      //   questionID = randomAlphaNumeric(16);
+         questionID = randomAlphaNumeric(16);
       Map<String, String> questionMap = {
         "qsnID": questionID,
         "qsnImgURL": questionImageURL,
         "qsnTitle": questionTitle,
         "qsnDescript": questionDescription
       };
-      //   await databaseService
-      //       .addQuestionData(questionMap, questionID)
-      //       .then((value) {
-      //     setState(() {
-      //       _isloading = false;
-      //       Navigator.pushNamed(context, AddQuestion.id);
-      //     });
-      //   });
-      // }
-      await _firestore.collection('questions').add(questionMap);
+      databaseService.addQuestionData(questionMap,questionID);
     }
   }
   @override

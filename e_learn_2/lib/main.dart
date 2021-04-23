@@ -1,5 +1,5 @@
 import 'package:e_learn/views/addQuestion.dart';
-import 'package:e_learn/views/create_questions.dart';
+import 'package:e_learn/views/create_question.dart';
 import 'package:e_learn/views/home.dart';
 import 'package:e_learn/views/signIn.dart';
 import 'package:e_learn/views/signUp.dart';

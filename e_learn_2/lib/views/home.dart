@@ -1,4 +1,4 @@
-import 'package:e_learn/views/create_questions.dart';
+import 'package:e_learn/views/create_question.dart';
 import 'package:e_learn/widgets/appBar.dart';
 import 'package:flutter/material.dart';
 

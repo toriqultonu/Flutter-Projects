@@ -24,7 +24,7 @@ class _CreateQuestionsState extends State<CreateQuestions> {
   createQuestionOnline() async {
     if (_formKey.currentState.validate()) {
       setState(() {
-        //_isloading = true;
+        _isloading = true;
       });
          questionID = randomAlphaNumeric(16);
       Map<String, String> questionMap = {
@@ -33,7 +33,13 @@ class _CreateQuestionsState extends State<CreateQuestions> {
         "qsnTitle": questionTitle,
         "qsnDescript": questionDescription
       };
-      databaseService.addQuestionData(questionMap,questionID);
+      await databaseService.addQuestionData(questionMap,questionID).whenComplete((){
+        setState(() {
+          _isloading = false;
+          Navigator.pushNamed(context, AddQuestion.id);
+        });
+      });
+
     }
   }
   @override

@@ -36,7 +36,8 @@ class _CreateQuestionsState extends State<CreateQuestions> {
       await databaseService.addQuestionData(questionMap,questionID).whenComplete((){
         setState(() {
           _isloading = false;
-          Navigator.pushNamed(context, AddQuestion.id);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>AddQuestion(questionID)
+          ));
         });
       });
 
@@ -110,7 +111,7 @@ class _CreateQuestionsState extends State<CreateQuestions> {
                           createQuestionOnline();
 
                         },
-                        child: blueButton(context, 'Create Question')),
+                        child: blueButton(context, 'Create Question', MediaQuery.of(context).size.width)),
                     SizedBox(
                       height: 25,
                     ),

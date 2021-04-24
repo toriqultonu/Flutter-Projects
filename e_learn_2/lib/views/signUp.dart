@@ -76,7 +76,7 @@ class _SignUPState extends State<SignUP> {
                     print(e);
                   }
                 },
-                child: blueButton(context, 'Sign Up'),
+                child: blueButton(context, 'Sign Up', MediaQuery.of(context).size.width),
               ),
               SizedBox(height: 18,),
               Row(

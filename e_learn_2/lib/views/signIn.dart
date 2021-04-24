@@ -73,7 +73,7 @@ class _SignInState extends State<SignIn> {
                     print(e);
                   }
                 },
-                child: blueButton(context, 'Sign In'),
+                child: blueButton(context, 'Sign In', MediaQuery.of(context).size.width),
               ),
               SizedBox(
                 height: 18,

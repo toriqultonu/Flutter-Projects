@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget blueButton(BuildContext context, String label){
+Widget blueButton(BuildContext context, String label, double buttonWidth){
   return Container(
     padding: EdgeInsets.symmetric(vertical: 15),
     decoration: BoxDecoration(
       color: Colors.blueAccent,
       borderRadius: BorderRadius.circular(30),
     ),
-    width: MediaQuery.of(context).size.width,
+    width: buttonWidth,
     alignment: Alignment.center,
     child: Text(
       '$label',

@@ -7,4 +7,11 @@ class DatabaseService{
       print(e.toString());
     });
   }
+
+  Future<void> addQSNData(Map qsnData, String qsnID) async {
+    await FirebaseFirestore.instance.collection("E_learners").doc(qsnID).collection("QNA").add(qsnData).catchError((e){
+      print(e.toString());
+    });
+  }
+
 }

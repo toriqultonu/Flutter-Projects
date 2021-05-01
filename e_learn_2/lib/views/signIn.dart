@@ -1,3 +1,4 @@
+import 'package:e_learn/helper/functions.dart';
 import 'package:e_learn/views/home.dart';
 import 'package:e_learn/views/signUp.dart';
 import 'package:e_learn/widgets/appBar.dart';
@@ -67,6 +68,7 @@ class _SignInState extends State<SignIn> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
+                      HelperFunction.saveUserLogDetails(isLoggedin: true);
                       Navigator.pushNamed(context, HomePage.id);
                     }
                   } catch (e) {

@@ -1,3 +1,4 @@
+import 'package:e_learn/helper/functions.dart';
 import 'package:e_learn/views/addQuestion.dart';
 import 'package:e_learn/views/create_question.dart';
 import 'package:e_learn/views/home.dart';
@@ -12,8 +13,30 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  bool _isLoggedin = false;
+
+  @override
+  void initState() {
+    checkUserLoggedInStatus();
+    super.initState();
+  }
+
+  checkUserLoggedInStatus() async {
+    HelperFunction.getUserLogDetails().then((value){
+      setState(() {
+        _isLoggedin = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +47,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 
-    initialRoute: SignIn.id,
+    initialRoute: (_isLoggedin ?? false)?  HomePage.id : SignIn.id,
     routes: {
       SignIn.id: (context) => SignIn(),
       SignUP.id: (context) => SignUP(),

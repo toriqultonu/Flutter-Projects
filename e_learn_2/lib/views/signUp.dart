@@ -1,3 +1,4 @@
+import 'package:e_learn/helper/functions.dart';
 import 'package:e_learn/views/home.dart';
 import 'package:e_learn/widgets/appBar.dart';
 import 'package:e_learn/widgets/blueButton.dart';
@@ -69,6 +70,7 @@ class _SignUPState extends State<SignUP> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if(newUser != null){
+                      HelperFunction.saveUserLogDetails(isLoggedin: true);
                       Navigator.pushNamed(context, HomePage.id);
                     }
                   }

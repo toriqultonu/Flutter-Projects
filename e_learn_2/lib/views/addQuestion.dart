@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class AddQuestion extends StatefulWidget {
  // static String id = 'addQustion';
-  final String qsnID;
+   String qsnID;
 
   AddQuestion(this.qsnID);
 
@@ -17,7 +17,7 @@ class _AddQuestionState extends State<AddQuestion> {
 
   final _formKey = GlobalKey<FormState>();
   String question, option1, option2, option3, option4;
-  bool _isloading;
+  bool _isloading = false;
 
   DatabaseService databaseService = new DatabaseService();
 
@@ -36,7 +36,7 @@ class _AddQuestionState extends State<AddQuestion> {
         "option4": option4
       };
 
-      databaseService.addQSNData(questionMap, widget.qsnID).then((value){
+      databaseService.addQSNData(questionMap, widget.qsnID.toString()).then((value){
         setState(() {
           _isloading = false;
         });
@@ -57,7 +57,7 @@ class _AddQuestionState extends State<AddQuestion> {
       body: _isloading? Container(
         child: Center(child: CircularProgressIndicator(),),
       ) : Form(
-         //key: _formKey,
+         key: _formKey,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 24),
           child: Column(
@@ -69,7 +69,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 decoration: InputDecoration(
                   hintText: 'Question ',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  question = value;
+                },
               ),
               SizedBox(
                 height: 18,
@@ -81,7 +83,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 decoration: InputDecoration(
                   hintText: 'option 1',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  option1 = value;
+                },
               ),
               SizedBox(
                 height: 18,
@@ -93,7 +97,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 decoration: InputDecoration(
                   hintText: 'option 2',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  option2 = value;
+                },
               ),
               SizedBox(
                 height: 18,
@@ -105,7 +111,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 decoration: InputDecoration(
                   hintText: 'option 3',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  option3 = value;
+                },
               ),
               SizedBox(
                 height: 18,
@@ -117,7 +125,9 @@ class _AddQuestionState extends State<AddQuestion> {
                 decoration: InputDecoration(
                   hintText: 'option 4',
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  option4 = value;
+                },
               ),
               Spacer(),
               Row(

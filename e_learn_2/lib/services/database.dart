@@ -15,4 +15,7 @@ class DatabaseService{
     });
   }
 
+  getQsnData() async {
+    return await FirebaseFirestore.instance.collection("E_Learners").snapshots();
+  }
 }

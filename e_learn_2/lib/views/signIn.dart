@@ -68,7 +68,8 @@ class _SignInState extends State<SignIn> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
-                      HelperFunction.saveUserLogDetails(isLoggedin: true);
+                      //TODO: SharedPreferences for saving login info
+                     // HelperFunction.saveUserLogDetails(isLoggedin: true);
                       Navigator.pushNamed(context, HomePage.id);
                     }
                   } catch (e) {

@@ -70,7 +70,8 @@ class _SignUPState extends State<SignUP> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if(newUser != null){
-                      HelperFunction.saveUserLogDetails(isLoggedin: true);
+                      //TODO: SharedPreferences for saving login info
+                      //HelperFunction.saveUserLogDetails(isLoggedin: true);
                       Navigator.pushNamed(context, HomePage.id);
                     }
                   }

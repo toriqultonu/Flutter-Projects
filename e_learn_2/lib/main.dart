@@ -4,6 +4,7 @@ import 'package:e_learn/views/create_question.dart';
 import 'package:e_learn/views/home.dart';
 import 'package:e_learn/views/signIn.dart';
 import 'package:e_learn/views/signUp.dart';
+import 'package:e_learn/views/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -20,42 +21,43 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  bool _isLoggedin = false;
-
-  @override
-  void initState() {
-    checkUserLoggedInStatus();
-    super.initState();
-  }
-
-  checkUserLoggedInStatus() async {
-    HelperFunction.getUserLogDetails().then((value){
-      setState(() {
-        _isLoggedin = value;
-      });
-    });
-  }
+  //TODO: SharedPreferences for saving login info
+  // bool _isLoggedin = false;
+  //
+  // @override
+  // void initState() {
+  //   checkUserLoggedInStatus();
+  //   super.initState();
+  // }
+  //
+  //  checkUserLoggedInStatus() async {
+  //    HelperFunction.getUserLogDetails().then((value){
+  //      setState(() {
+  //        _isLoggedin = value;
+  //      });
+  //    });
+  //  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
 
-    initialRoute: (_isLoggedin ?? false)?  HomePage.id : SignIn.id,
+    //initialRoute: (_isLoggedin ?? false)?  HomePage.id : SignIn.id,
+        initialRoute: MySplash.id,
     routes: {
+      MySplash.id: (context) => MySplash(),
       SignIn.id: (context) => SignIn(),
       SignUP.id: (context) => SignUP(),
       HomePage.id: (context) => HomePage(),
       CreateQuestions.id: (context) => CreateQuestions(),
       //AddQuestion.id: (context) => AddQuestion(),
     }
-     // home: SignIn(),
+      //home: MySplash(),
     );
   }
 }

@@ -15,7 +15,11 @@ class DatabaseService{
     });
   }
 
-  getQsnData() async {
+  Future getQsnData() async {
     return await FirebaseFirestore.instance.collection("E_Learners").snapshots();
+  }
+
+  getTestData(String quizID) async {
+    return await FirebaseFirestore.instance.collection("E_Learners").doc(quizID).collection("QNA").get();
   }
 }

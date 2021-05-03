@@ -1,6 +1,8 @@
 import 'package:e_learn/services/database.dart';
 import 'package:e_learn/views/create_question.dart';
+import 'package:e_learn/views/play_quiz.dart';
 import 'package:e_learn/widgets/appBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget qsnList(){
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 24),
       child: StreamBuilder(
         stream: qsnStream,
         builder: (context, snapshot){
@@ -25,7 +28,8 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index){
                   return QsnTitle(imgUrl: snapshot.data.docs[index].data()["qsnImgURL"],
                       title: snapshot.data.docs[index].data()["qsnTitle"],
-                      desc: snapshot.data.docs[index].data()["qsnDescript"]);
+                      desc: snapshot.data.docs[index].data()["qsnDescript"],
+                      quizID: snapshot.data.docs[index].data()["qsnID"],);
                 },
               );
         },
@@ -70,22 +74,38 @@ class QsnTitle extends StatelessWidget {
   final String imgUrl;
   final String title;
   final String desc;
-  QsnTitle({@required this.imgUrl, @required this.title, @required this.desc});
+  final String quizID;
+  QsnTitle({@required this.imgUrl, @required this.title, @required this.desc, @required this.quizID});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Image.network(imgUrl),
-          Container(
-            child: Column(
-              children: [
-                Text(title),
-                Text(desc),
-              ],
-            ),
-          )
-        ],
+    return GestureDetector(
+      onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PlayQuiz(quizID)
+          ));
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 8),
+        height: 150,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+                child: Image.network(imgUrl, width: MediaQuery.of(context).size.width - 48 , fit: BoxFit.cover,)),
+            Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Colors.black26),
+
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(title, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
+                  SizedBox(height: 5,),
+                  Text(desc, style: TextStyle(color: Colors.white, fontSize: 14),),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

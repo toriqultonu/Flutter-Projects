@@ -1,9 +1,11 @@
+import 'package:e_learn/controller/question.dart';
+import 'package:e_learn/views/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_ticket_provider_mixin.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:quiz_app/src/controller/question.dart';
-import 'package:quiz_app/src/ui/score_page.dart';
+
+
 
 // We use get package for our state management
 class QuestionController extends GetxController
@@ -40,15 +42,17 @@ class QuestionController extends GetxController
   int _numberOfCorrectAnswer = 0;
   int get numberOfCorrectAnswer => _numberOfCorrectAnswer;
 
-  List<Question> _questions = questionList
-      .map((q) => Question(
-            id: q['id'],
-            question: q['question'],
-            options: q['options'],
-            answer: q['correct_answer'],
-          ))
-      .toList();
+  // List<Question> _questions = questionList
+  //     .map((q) => Question(
+  //           id: q['id'],
+  //           question: q['question'],
+  //           options: q['options'],
+  //           answer: q['correct_answer'],
+  //         ))
+  //     .toList();
+  List<Question> _questions = questionList;
   List<Question> get questions => this._questions;
+   // List<Question> questions = questionList;
 
   // called immediately after the widget is allocated memory
   @override
@@ -99,7 +103,7 @@ class QuestionController extends GetxController
       _animationController.reset();
       _animationController.forward().whenComplete(nextQuestion);
     } else {
-      Get.to(() => ScorePage());
+      //Get.to(() => ScorePage());
     }
   }
 

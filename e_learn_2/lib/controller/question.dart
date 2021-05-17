@@ -1,20 +1,22 @@
+import 'package:e_learn/views/start_page.dart';
+
 class Question {
   final int id;
   final String question;
   final int answer;
   final List<String> options;
 
-  Question({this.id, this.question, this.answer, this.options});
+  Question(this.id, this.question, this.answer, this.options);
 }
 
-const List questionList = [
+const List questionList1 = [
   {
     "id": 1,
     "category": "Entertainment: Video Games",
     "type": "multiple",
     "difficulty": "medium",
     "question":
-        "Which was the first video game to be produced by development company Rare?hkahdhcluhfcjhdfkajsdhf asdfjkjkdf wefj a;elfkjaf ekjadfa fefja;kldfja;e ad fajdf;akef ",
+        "Which was the first video game to be produced by development company Rare?",
     "correct_answer": 1,
     "options": ["R.C. Pro-Am", "Slalom", "Donkey Kong Country", "Battletoads"]
   },
@@ -113,3 +115,5 @@ const List questionList = [
     "options": ["Cologne", "Atlanta", "London", "Cluj-Napoca"]
   }
 ];
+
+//final List questionList = questionList;

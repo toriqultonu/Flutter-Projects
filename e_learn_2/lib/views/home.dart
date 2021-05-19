@@ -1,6 +1,7 @@
 import 'package:e_learn/services/database.dart';
 import 'package:e_learn/views/create_question.dart';
 import 'package:e_learn/views/play_quiz.dart';
+import 'package:e_learn/views/play_quiz_2.dart';
 import 'package:e_learn/views/start_page.dart';
 import 'package:e_learn/widgets/appBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -81,7 +82,7 @@ class QsnTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => StartPage(quizID)
+          Navigator.push(context, MaterialPageRoute(builder: (context) => PlayQuiz2(quizID)
           ));
       },
       child: Container(

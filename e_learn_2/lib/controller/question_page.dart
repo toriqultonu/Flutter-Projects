@@ -8,9 +8,12 @@ import 'package:get/get.dart';
 
 class QuestionPage extends StatelessWidget {
 
+  final String quizID;
+  QuestionPage(this.quizID);
+
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController _controller = Get.put(QuestionController(quizID));
     return Stack(
       children: <Widget>[
         SafeArea(
@@ -29,7 +32,7 @@ class QuestionPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: GetBuilder<QuestionController>(
-                    init: QuestionController(),
+                    init: QuestionController(quizID),
                     builder: (controller) {
                       return Stack(
                         children: <Widget>[
@@ -128,12 +131,13 @@ class QuestionPage extends StatelessWidget {
 
 class QuestionCard extends StatelessWidget {
   final Question question;
+  final String quizId;
 
-  const QuestionCard({Key key, @required this.question}) : super(key: key);
+  const QuestionCard({Key key, @required this.question, this.quizId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController _controller = Get.put(QuestionController(quizId));
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 12),
       padding: EdgeInsets.all(15),
@@ -163,6 +167,7 @@ class QuestionCard extends StatelessWidget {
               index: index,
               text: question.options[index],
               press: () => _controller.checkAnswer(question, index),
+              quizId: quizId,
             ),
           ),
         ],
@@ -175,13 +180,14 @@ class Option extends StatelessWidget {
   final String text;
   final int index;
   final VoidCallback press;
+  final String quizId;
 
-  const Option({Key key, this.text, this.index, this.press}) : super(key: key);
+  const Option({Key key, this.text, this.index, this.press, this.quizId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<QuestionController>(
-      init: QuestionController(),
+      init: QuestionController(quizId),
       builder: (controller) {
         return InkWell(
           onTap: press,

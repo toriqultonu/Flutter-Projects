@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_learn/controller/question.dart';
+import 'package:e_learn/services/database.dart';
 import 'package:e_learn/views/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,32 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 // We use get package for our state management
 class QuestionController extends GetxController
     with SingleGetTickerProviderMixin {
+  DatabaseService databaseService = new DatabaseService();
+  QuerySnapshot questionSnapshot;
+  final String quizID;
+
+  List<Question> _questions;
+
+  QuestionController(this.quizID){
+    List<Question> questionList;
+    databaseService.getTestData(quizID).then((value) {
+      questionSnapshot = value;
+      int i = 1;
+      for (var document in questionSnapshot.docs) {
+        List<String> options = [
+          document.data()["option1"],
+          document.data()["option2"],
+          document.data()["option3"],
+          document.data()["option4"]
+        ];
+        options.shuffle();
+        Question question = new Question(i, document.data()["question"], i, options);
+        questionList.add(question);
+        i++;
+      }
+    });
+    this._questions = questionList;
+  }
   String _userName;
   String get userName => this._userName;
 
@@ -50,7 +78,8 @@ class QuestionController extends GetxController
   //           answer: q['correct_answer'],
   //         ))
   //     .toList();
-  List<Question> _questions = questionList;
+
+
   List<Question> get questions => this._questions;
    // List<Question> questions = questionList;
 

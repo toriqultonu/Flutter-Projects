@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'home.dart';
 
-List<Question> questionList;
 
 class StartPage extends StatefulWidget {
   final String quizID;
@@ -20,34 +19,11 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
 
-  DatabaseService databaseService = new DatabaseService();
-  QuerySnapshot questionSnapshot;
 
-  int i = 1;
-
-  void data()async{
-    await databaseService.getTestData(widget.quizID).then((value) {
-      questionSnapshot = value;
-      for (var document in questionSnapshot.docs) {
-        List<String> options = [
-          document.data()["option1"],
-          document.data()["option2"],
-          document.data()["option3"],
-          document.data()["option4"]
-        ];
-        options.shuffle();
-        Question question = new Question(
-            i, document.data()["question"], i, options);
-        questionList.add(question);
-        i++;
-      }
-    });
-        }
 
   @override
   void initState(){
 
-      data();
       super.initState();
       }
 
@@ -73,7 +49,7 @@ class _StartPageState extends State<StartPage> {
           ),
         ],
       ),
-      body: QuestionPage(),
+      body: QuestionPage(widget.quizID),
     );
   }
 }

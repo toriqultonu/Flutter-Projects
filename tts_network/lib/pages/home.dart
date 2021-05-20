@@ -16,28 +16,45 @@ class _HomeState extends State<Home> {
   @override
   void initState(){
     super.initState();
+    // Detects when user signed in.
       googleSignIn.onCurrentUserChanged.listen((account) {
-        if(account != null){
-          print('User signed in : $account');
-          setState(() {
-            isAuth = true;
-          });
-        }
-        else{
-          setState(() {
-            isAuth = false;
-          });
-        }
+          handleSignIn(account);
+      },
+      onError: (err){
+        print('Error signing with google in: $err');
+      });
+      // Re-authenticate user when app is opened
+      googleSignIn.signInSilently(suppressErrors: false).then((account){
+          handleSignIn(account);
+      }).catchError((err){
+        print('Error signing with google in: $err');
       });
   }
 
+  handleSignIn(GoogleSignInAccount account){
+    if(account != null){
+      print('User signed in : $account');
+      setState(() {
+        isAuth = true;
+      });
+    }
+    else{
+      setState(() {
+        isAuth = false;
+      });
+    }
+  }
+
   login(){
-    print('Taped');
     googleSignIn.signIn();
+  }
+  logout(){
+    googleSignIn.signOut();
   }
 
   Widget buildAuthScreen() {
-    return Text('Authenticated');
+    return RaisedButton(onPressed: logout,
+    child: Text('Logout'),);
   }
 
   Scaffold buildUnAuthScreen(){

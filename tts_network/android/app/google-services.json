@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1007756473653",
+    "project_id": "tts-network-d6702",
+    "storage_bucket": "tts-network-d6702.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007756473653:android:582393f677a90661be487c",
+        "android_client_info": {
+          "package_name": "com.example.tts_network"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007756473653-imnspta7o8lg8shsbnv3d5grti2g3prd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYj-1wwVEGkkELYDA5AdR158WgJWSXzd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007756473653-imnspta7o8lg8shsbnv3d5grti2g3prd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

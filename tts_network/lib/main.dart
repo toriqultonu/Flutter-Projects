@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tts_network/pages/home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -10,7 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FlutterShare',
       debugShowCheckedModeBanner: false,
-      home: Text("Hello World"),
+      theme: ThemeData(
+        primaryColor: Colors.green,
+        accentColor: Colors.redAccent
+      ),
+      home: Home(),
     );
   }
 }

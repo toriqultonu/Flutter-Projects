@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FlutterShare',
+      title: 'tts_network',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,

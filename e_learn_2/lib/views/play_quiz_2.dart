@@ -15,9 +15,7 @@ class PlayQuiz2 extends StatefulWidget {
   @override
   _PlayQuiz2State createState() => _PlayQuiz2State();
 
-
 }
-
 int total = 0;
 int correct = 0;
 int incorrect = 0;
@@ -27,13 +25,15 @@ int timer = 30;
 bool canceltimer = false;
 String showtimer = "30";
 Color colorshow = Colors.cyanAccent;
-Color colorshow1 = Colors.cyanAccent;
-Color colorshow2 = Colors.cyanAccent;
-Color colorshow3 = Colors.cyanAccent;
-Color colorshow4 = Colors.cyanAccent;
 Color right = Colors.green;
 Color wrong = Colors.red;
 
+Map<int, Color> btncolor = {
+  1 : Colors.cyanAccent,
+  2 : Colors.cyanAccent,
+  3 : Colors.cyanAccent,
+  4 : Colors.cyanAccent
+};
 class _PlayQuiz2State extends State<PlayQuiz2> {
 
   DatabaseService databaseService = new DatabaseService();
@@ -43,6 +43,7 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
   void initState() {
     databaseService.getTestData(widget.quizID).then((value){
       questionSnapshot = value;
+    
       notAttempted = 0;
       correct = 0;
       total = questionSnapshot.docs.length;
@@ -55,7 +56,8 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
     super.initState();
   }
 
-  QuestionModel getQuestionModelFromDataSnapshot(DocumentSnapshot qsnSnapshot){
+    QuestionModel getQuestionModelFromDataSnapshot(DocumentSnapshot qsnSnapshot){
+
     QuestionModel questionModel = new QuestionModel();
     questionModel.question = qsnSnapshot.data()["question"];
     List<String> options = [
@@ -64,8 +66,7 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
       qsnSnapshot.data()["option3"],
       qsnSnapshot.data()["option4"]
     ];
-    options.shuffle();
-
+      options.shuffle();
     questionModel.option1 = options[0];
     questionModel.option2 = options[1];
     questionModel.option3 = options[2];
@@ -74,6 +75,7 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
     questionModel.answer = false;
     return questionModel;
   }
+
 
   void starttimer() async{
     const onesec = Duration(seconds: 1);
@@ -96,19 +98,24 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
 
   void nextQuestion(){
     canceltimer = false;
-    if(i<total-1) {
+    timer = 30;
       setState(() {
-        i++; }
-      );
-    }
-    else{
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Results()
-      ));
-    }
+        if(i<total-1){
+          i++;
+        }
+       else{
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Results()
+          ));
+        }
+        btncolor[1] = Colors.cyanAccent;
+        btncolor[2] = Colors.cyanAccent;
+        btncolor[3] = Colors.cyanAccent;
+        btncolor[4] = Colors.cyanAccent;
+      });
     starttimer();
   }
 
-  void checkans(String k){
+  void checkans(String k, int op){
     if(!getQuestionModelFromDataSnapshot(questionSnapshot.docs[i]).answer){
 
       ///correct
@@ -118,7 +125,8 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
         correct = correct + 1;
         notAttempted = notAttempted - 1;
         setState(() {
-          canceltimer = true;
+            canceltimer = true;
+            btncolor[op] = colorshow;
         });
       }
       ///incorrect
@@ -129,7 +137,7 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
         notAttempted = notAttempted - 1;
         setState(() {
           canceltimer = true;
-
+          btncolor[op] = colorshow;
         });
       }
       Timer(Duration(seconds: 2), nextQuestion);
@@ -137,7 +145,7 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
 
   }
 
-  Widget choicebutton(String k){
+  Widget choicebutton(String k, int op){
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: 10.0,
@@ -145,13 +153,13 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
       ),
       child: MaterialButton(
         onPressed: (){
-          checkans(k);
+          checkans(k,op);
         },
         child: Text(
           k, style: TextStyle(color: Colors.white, fontSize: 16),
           maxLines: 1,
         ),
-        color: colorshow,
+        color: btncolor[op],
         splashColor: Colors.indigo[700],
         highlightColor: Colors.indigo[700],
         minWidth: 200.0,
@@ -161,13 +169,9 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     QuestionModel questionModel =  getQuestionModelFromDataSnapshot(questionSnapshot.docs[i]);
-
     return Scaffold(
       appBar: AppBar(
         title: appBar(context),
@@ -190,10 +194,10 @@ class _PlayQuiz2State extends State<PlayQuiz2> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  choicebutton(questionModel.option1),
-                  choicebutton(questionModel.option2),
-                  choicebutton(questionModel.option3),
-                  choicebutton(questionModel.option4),
+                  choicebutton(questionModel.option1, 1),
+                  choicebutton(questionModel.option2, 2),
+                  choicebutton(questionModel.option3, 3),
+                  choicebutton(questionModel.option4, 4),
                 ],
               ),
             ),

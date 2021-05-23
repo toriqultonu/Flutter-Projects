@@ -5,7 +5,7 @@ class User {
   final String username;
   final String email;
   final String photoUrl;
-  final String displayname;
+  final String displayName;
   final String bio;
 
   User({
@@ -13,18 +13,18 @@ class User {
    this.username,
    this.email,
    this.photoUrl,
-   this.displayname,
+   this.displayName,
    this.bio
 });
 
   factory User.fromDocument(DocumentSnapshot doc){
     return User(
-      id : doc['id'],
-      email: doc['email'],
-      username: doc['username'],
-      photoUrl: doc['photoUrl'],
-      displayname: doc['displayname'],
-      bio: doc['bio']
+      id : doc.data()['id'],
+      email: doc.data()['email'],
+      username: doc.data()['username'],
+      photoUrl: doc.data()['photoUrl'],
+      displayName: doc.data()['displayName'],
+      bio: doc.data()['bio']
     );
   }
 }

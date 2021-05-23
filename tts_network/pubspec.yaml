@@ -23,6 +23,7 @@ dependencies:
   firebase_auth:
   firebase_core:
   google_sign_in:
+  flutter_svg:
 
 
 dev_dependencies:

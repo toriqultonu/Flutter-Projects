@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,7 +9,11 @@ import 'package:tts_network/pages/search.dart';
 import 'package:tts_network/pages/timeline.dart';
 import 'package:tts_network/pages/upload.dart';
 
+import 'create_account.dart';
+
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final userRef = FirebaseFirestore.instance.collection('users');
+final DateTime timestamp = DateTime.now();
 
 class Home extends StatefulWidget {
   @override
@@ -20,6 +25,7 @@ class _HomeState extends State<Home> {
   bool isAuth = false;
   PageController pageController;
   int pageIndex = 0;
+  String username;
 
   @override
   void initState(){
@@ -48,7 +54,7 @@ class _HomeState extends State<Home> {
 
   handleSignIn(GoogleSignInAccount account){
     if(account != null){
-      print('User signed in : $account');
+      createUserInFirestore();
       setState(() {
         isAuth = true;
       });
@@ -58,6 +64,28 @@ class _HomeState extends State<Home> {
         isAuth = false;
       });
     }
+  }
+
+  createUserInFirestore() async {
+    //1. check if user exist in user collection in database.
+     final GoogleSignInAccount user = googleSignIn.currentUser;
+     final DocumentSnapshot doc = await userRef.doc(user.id).get();
+
+    //2. if the user doesn't exist, then we want to take them to the create account page
+    if(!doc.exists){
+      username = await Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccount()));
+    }
+
+    //3. get user name from create account, use it to make new user document in users collections.
+    userRef.doc(user.id).set({
+      "id" : user.id,
+      "username" : username,
+      "photoUrl" : user.photoUrl,
+      "email" : user.email,
+      "displayName" : user.displayName,
+      "bio" : "",
+      "timestamp" : timestamp
+    });
   }
 
   login(){
@@ -81,7 +109,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: [
-          Timeline(),
+          //Timeline(),
+          RaisedButton(onPressed: logout, child: Text("Logout"),),
           ActivityFeed(),
           Upload(),
           Search(),

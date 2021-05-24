@@ -24,6 +24,7 @@ dependencies:
   firebase_core:
   google_sign_in:
   flutter_svg:
+  cached_network_image:
 
 
 dev_dependencies:
